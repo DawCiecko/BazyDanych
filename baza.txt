@@ -1,0 +1,217 @@
+Table Pacjent{
+    ID int unique
+    Imie varchar
+    Nazwisko varchar
+    PESEL varchar(11)
+    NrTel varchar
+    Adres varchar
+    Dane_Logowania int
+}
+
+Table Lekarz{
+  ID int unique
+  IdPracownika int 
+  Specjalizacja varchar
+}
+
+Table Procedury{
+  ID int unique
+  TypBadania int
+  DataWykonania datetime
+  Skierowanie int
+  LekarzWykonujacy int
+  Pacjent int
+  InfoDodatkowe varchar
+}
+
+Table Gabinet{
+  ID int unique
+  Numer int
+  Szpital int
+}
+
+Table Wyniki{
+  ID int unique
+  Procedura int
+  OpisBadania varchar
+}
+
+Table Szpital{
+  ID int unique
+  Adres varchar
+}
+
+Table Poradnia{
+  ID int unique
+  Szpital int
+  Adres varchar
+}
+
+Table Magazyn{
+  ID int unique
+  Szpital int
+}
+
+Table StanMagazynowy{
+  Magazyn int
+  Produkt int
+  Ilosc int
+}
+
+Table Produkty{
+  ID int unique
+  Nazwa varchar
+}
+
+Table Pracownicy{
+  ID int unique
+  Imie varchar
+  Nazwisko varchar
+  PESEL varchar(11)
+  NrTel varchar
+  Adres varchar
+  Wypłata double
+  Stanowisko varchar
+  Szpital int
+  Dane_logowania int
+}
+
+
+Table Recepta{
+  ID int unique
+  Kod int
+  LekarzWystawiajcy int
+  Pacjent int
+  Produkt int
+}
+
+Table Skierowania{
+  ID int unique
+  Kod int
+  LekarzWystawiajcy int
+  Pacjent int
+  Badanie int
+  Data datetime
+}
+
+Table Wizyty{
+  ID int unique
+  Pacjent int
+  Lekarz int
+  Gabinet int
+  Data datetime
+  InformacjeDodatkowe varchar
+}
+
+Table Badania{
+  ID int unique
+  Nazwa varchar
+}
+
+Table Zamowienia{
+  ID int unique
+  Produkt int
+  Ilosc int
+}
+
+Table Dostawy{
+  ID int unique
+  Zamowienie int
+  DataDostawy datetime
+  Magazyn int
+}
+
+Table DaneLogowania{
+  ID int unique
+  login varchar
+  password_hash varchar
+  salt varchar
+  TypKonta int
+}
+
+Table Terminarz{
+  ID int unique
+  Procedura int
+  data datetime
+  sala int
+}
+
+Table Grafik{
+  ID int unique
+  Pracownik int
+  dataStart datetime
+  dataKoniec datetime
+  gabinet int
+}
+
+Table Rola{
+  ID int unique
+  NazwaRoli varchar
+}
+
+Ref: "Szpital"."ID" < "Gabinet"."Szpital"
+
+Ref: "Szpital"."ID" < "Pracownicy"."Szpital"
+
+Ref: "Szpital"."ID" < "Poradnia"."Szpital"
+
+Ref: "Gabinet"."ID" < "Wizyty"."Gabinet"
+
+Ref: "Pacjent"."ID" < "Wizyty"."Pacjent"
+
+Ref: "Lekarz"."ID" < "Wizyty"."Lekarz"
+
+Ref: "Pracownicy"."ID" - "Lekarz"."IdPracownika"
+
+Ref: "Lekarz"."ID" < "Skierowania"."LekarzWystawiajcy"
+
+Ref: "Badania"."ID" < "Procedury"."TypBadania"
+
+
+
+Ref: "Pacjent"."ID" < "Procedury"."Pacjent"
+
+
+Ref: "Procedury"."ID" - "Wyniki"."Procedura"
+
+Ref: "Skierowania"."ID" - "Procedury"."Skierowanie"
+
+
+
+Ref: "Zamowienia"."ID" < "Dostawy"."Zamowienie"
+
+Ref: "Produkty"."ID" < "Zamowienia"."Produkt"
+
+Ref: "Produkty"."ID" < "Recepta"."Produkt"
+
+Ref: "Szpital"."ID" - "Magazyn"."Szpital"
+
+Ref: "Produkty"."ID" < "StanMagazynowy"."Produkt"
+
+Ref: "Magazyn"."ID" < "StanMagazynowy"."Magazyn"
+
+Ref: "Magazyn"."ID" < "Dostawy"."Magazyn"
+
+Ref: "Lekarz"."ID" < "Recepta"."LekarzWystawiajcy"
+
+Ref: "Pacjent"."ID" < "Recepta"."Pacjent"
+
+Ref: "DaneLogowania"."ID" - "Pracownicy"."Dane_logowania"
+
+Ref: "DaneLogowania"."ID" - "Pacjent"."Dane_Logowania"
+
+Ref: "Pracownicy"."ID" < "Grafik"."Pracownik"
+
+Ref: "Gabinet"."ID" < "Grafik"."gabinet"
+
+Ref: "Gabinet"."ID" < "Terminarz"."sala"
+
+Ref: "Procedury"."ID" < "Terminarz"."Procedura"
+
+Ref: "Pacjent"."ID" < "Skierowania"."Pacjent"
+
+Ref: "Procedury"."LekarzWykonujacy" > "Lekarz"."ID"
+
+Ref: "Badania"."ID" - "Skierowania"."Badanie"
+
+Ref: "Rola"."ID" - "DaneLogowania"."TypKonta"

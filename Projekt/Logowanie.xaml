@@ -7,10 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="TBLogin" HorizontalAlignment="Left" Margin="315,179,0,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TBLogin" HorizontalAlignment="Left" Margin="315,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TBLogin_TextChanged"/>
         <Label x:Name="LabelZalogujSie" Content="Zaloguj Się" HorizontalAlignment="Left" Margin="315,95,0,0" VerticalAlignment="Top" Height="58" Width="128" FontSize="22"/>
-        <TextBox x:Name="TBHaslo" HorizontalAlignment="Left" Margin="315,226,0,0" TextWrapping="Wrap" Text="Hasło" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="BTNZatwierdz" Content="Zatwierdź" HorizontalAlignment="Left" Margin="347,280,0,0" VerticalAlignment="Top" Height="25" Width="64" Click="BTNZatwierdz_Clicked"/>
+        <Button x:Name="BTNZatwierdz" Content="Zatwierdź" HorizontalAlignment="Left" Margin="343,273,0,0" VerticalAlignment="Top" Height="25" Width="64" Click="BTNZatwierdz_Clicked"/>
+        <PasswordBox x:Name="TBHaslo" HorizontalAlignment="Left" Margin="315,225,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Login" HorizontalAlignment="Left" Margin="356,148,0,0" VerticalAlignment="Top"/>
+        <Label Content="Hasło" HorizontalAlignment="Left" Margin="356,199,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using ModeleDanych.Data;
+using ModeleDanych.Models;
+using ModeleDanych.Services;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ModeleDanych.Services;
 
 namespace Projekt
 {
@@ -24,30 +26,54 @@ namespace Projekt
     
         private void BTNZatwierdz_Clicked(object sender, RoutedEventArgs e)
         {
-            //informacja bedzie wychodzila po sprawdzeniu danych uzytkownika wiec te zmienne tutaj sa zeby sie nie czepialo o bledy
-            bool czyistnieje = true;
-            int typkonta = 1;
-            Window okno = null;
-            if (czyistnieje == true)
+            string login = TBLogin.Text;
+            string haslo = TBHaslo.Password;
+            // login : hasło
+            // lekarz : test
+            // pacjent : test
+            // pracownik : test
+            using (var context = new AppDbContext())
             {
-                if (typkonta == 1)
+                context.Database.EnsureCreated();
+                AuthService authService = new(context);
+                LoginResult result = authService.Zaloguj(login, haslo);
+                Window okno = null;
+                if (result.Sukces)
                 {
-                    okno = new PacjentOkno();
-                }
-                if(typkonta == 2)
-                {
-                    okno = new LekarzOkno();
-                }
-                if (typkonta == 3)
-                {
-                    okno = new PracownikOkno();
-                }
-                if (okno != null)
-                {
-                    okno.Show();
+                    //if (result.CzyPacjent)
+                    //{
+                    //    okno = new PacjentOkno();
+                    //}
+                    //if (result.CzyPracownik)
+                    //{
+                    //    if (result.ZalogowanyPracownik!.Lekarz != null)
+                    //    {
+                    //        okno = new LekarzOkno();
+                    //    }
+                    //    else
+                    //    {
+                    //        okno = new PracownikOkno();
+                    //    }
+                    //}
+                    //if (okno != null)
+                    //{
+                    //    okno.Show();
+                    //    this.Close();
+                    //}
+                    Widok widok = new(result);
+                    widok.Show();
                     this.Close();
                 }
+                else
+                {
+                    MessageBox.Show(result.Wiadomosc, "Błąd logowania", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+        }
+
+        private void TBLogin_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

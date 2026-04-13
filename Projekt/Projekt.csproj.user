@@ -14,5 +14,8 @@
     <Compile Update="PracownikOkno.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Widok.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

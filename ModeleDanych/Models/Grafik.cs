@@ -22,4 +22,9 @@ public class Grafik
 
     [NotMapped]
     public TimeSpan CzasPracy => DataKoniec - DataStart;
+
+    public override string ToString()
+    {
+        return $"{DataStart:dd.MM.yyyy} {DataStart:HH:mm} - {DataKoniec:HH:mm} {Pracownik?.Imie} {Pracownik?.Nazwisko}";
+    }
 }

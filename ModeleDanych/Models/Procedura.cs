@@ -27,4 +27,9 @@ public class Procedura
 
     public Wynik? Wynik { get; set; }
     public Terminarz? Terminarz { get; set; }
+
+    public override string ToString()
+    {
+        return $"{DataWykonania:dd.MM.yyyy} - {TypBadania?.Nazwa ?? $"Badanie {TypBadaniaId}"} (Pacjent: {Pacjent?.Nazwisko ?? PacjentId.ToString()})";
+    }
 }

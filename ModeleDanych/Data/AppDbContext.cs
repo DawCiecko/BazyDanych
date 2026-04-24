@@ -32,7 +32,10 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlite("Data Source=szpital.db");
+        var folder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
+                     ?? AppContext.BaseDirectory;
+        var dbPath = Path.Combine(folder, "szpital.db");
+        options.UseSqlite($"Data Source={dbPath}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,7 +53,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Wizyta>()
             .HasOne(w => w.Pacjent)
             .WithMany(p => p.Wizyty)
-            .HasForeignKey(w => w.PacjentId);
+            .HasForeignKey(w => w.PacjentId)
+            .IsRequired(false);
 
         modelBuilder.Entity<Wizyta>()
             .HasOne(w => w.Lekarz)

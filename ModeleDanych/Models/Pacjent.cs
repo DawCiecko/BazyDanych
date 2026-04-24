@@ -35,6 +35,8 @@ public class Pacjent
     public ICollection<Skierowanie> Skierowania { get; set; } = new List<Skierowanie>();
     public ICollection<Procedura> Procedury { get; set; } = new List<Procedura>();
 
-    
-    
+    public override string ToString()
+    {
+        return $"[{ID}] {Imie} {Nazwisko} - PESEL: {PESEL}";
+    }
 }
